@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+
+# builds
+dist/
+build/
+*.tsbuildinfo
+
+# vite
+*.local
+
+# fonts: fetched via `bun run fonts`, not committed (binary)
+apps/web/public/fonts/InterVariable.woff2
+apps/web/public/fonts/InterVariable-Italic.woff2
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# logs
+*.log
+npm-debug.log*

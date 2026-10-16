@@ -1,0 +1,179 @@
+/* ══ Atelier — base ═════════════════════════════════════════
+   Inter Variable, self-hosted from GitHub rsms/inter v4.1.
+   NOT Google Fonts (their build strips the opsz axis).
+
+   Theme variables below back the seed components' stylesheets,
+   which reference --font-ui, --fill-on, --fill-slab, --ink,
+   --ink-rgb, --fill-on-rgb, --card, --signal (PLAN §2.1). */
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/InterVariable.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/InterVariable-Italic.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* seed-component theme contract */
+  --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+  --ink: #1C1B1A;
+  --ink-rgb: 28, 27, 26;
+  --fill-on: #17181A;
+  --fill-on-rgb: 23, 24, 26;
+  --fill-slab: #FFFFFF;
+  --card: #FFFFFF;
+  --signal: #2231DD;
+
+  /* atelier tokens (PLAN §2.1) */
+  --paper: #F4F2ED;
+  --ink-soft: #6F6A61;
+  --ink-faint: #A8A29A;
+  --dark-card: #3A3F4C;
+  --halo: rgba(246, 217, 230, 0.6);
+  --block-lav: #E3E0F6;
+  --block-peri: #DEE7FB;
+  --grid-line: #C7D5F2;
+  --radius-card: 20px;
+  --shadow-card: 0 1px 2px rgba(16, 16, 20, 0.05), 0 12px 32px rgba(16, 16, 20, 0.10);
+  --shadow-float: 0 2px 6px rgba(16, 16, 20, 0.06), 0 20px 48px rgba(16, 16, 20, 0.14);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--paper);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* ══ app chrome ═══════════════════════════════════════════ */
+.atelier-bar {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100vw - 32px);
+  overflow-x: auto;
+  background: var(--card);
+  border: 1px solid rgba(16, 16, 20, 0.08);
+  border-radius: 999px;
+  padding: 8px 8px 8px 16px;
+  box-shadow: var(--shadow-card);
+  font-size: 13px;
+}
+.atelier-bar .bar-title {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-right: 4px;
+  white-space: nowrap;
+}
+.atelier-bar button {
+  font: inherit;
+  font-weight: 500;
+  border: 1px solid rgba(16, 16, 20, 0.10);
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 120ms ease, transform 120ms ease;
+}
+.atelier-bar button:hover { background: #ECE9E1; }
+.atelier-bar button:active { transform: scale(0.97); }
+.atelier-bar button.primary {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.atelier-bar button.primary:hover { background: #33322F; }
+.atelier-bar .bar-sep {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(16, 16, 20, 0.10);
+  margin: 2px;
+  flex: none;
+}
+.atelier-bar .bar-hint {
+  font-size: 11px;
+  color: var(--ink-faint);
+  margin: 0 8px 0 4px;
+  white-space: nowrap;
+}
+.atelier-bar .bar-flash {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1F9D55;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.tldraw-holder {
+  position: fixed;
+  inset: 0;
+}
+
+/* component shapes: canvas owns the frame; content is inert
+   until editing (Figma-like) */
+.acomp { width: 100%; height: 100%; overflow: hidden; }
+.acomp-view { width: 100%; height: 100%; pointer-events: none; }
+.acomp-edit { width: 100%; height: 100%; outline: 2px solid var(--grid-line); outline-offset: -2px; }
+.acomp-edit [contenteditable="true"] { outline: none; cursor: text; }
+.acomp-missing {
+  width: 100%; height: 100%;
+  display: grid; place-items: center;
+  border: 1px dashed var(--ink-faint);
+  border-radius: 12px;
+  color: var(--ink-faint);
+  font-size: 12px;
+}
+
+/* ══ music card (html-kind registry entry) ════════════════ */
+.mc {
+  width: 100%; height: 100%;
+  background: var(--card);
+  border: 1px solid rgba(16, 16, 20, 0.07);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  font-family: var(--font-ui);
+}
+.mc-top { display: flex; gap: 12px; align-items: center; }
+.mc-art {
+  width: 56px; height: 56px; flex: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4C6EF5 0%, #9775FA 55%, #F783AC 100%);
+  display: grid; place-items: center;
+}
+.mc-art svg { display: block; }
+.mc-title { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+.mc-artist { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+.mc-bar { height: 4px; border-radius: 999px; background: rgba(16, 16, 20, 0.08); overflow: hidden; }
+.mc-bar i { display: block; height: 100%; width: 42%; border-radius: 999px; background: var(--ink); }
+.mc-times {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
