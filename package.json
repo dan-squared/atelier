@@ -1,0 +1,1 @@
+{"name":"atelier","private":true,"scripts":{"build":"bun --filter @atelier/web build","dev":"bun --filter @atelier/web dev","typecheck":"bun --filter @atelier/web typecheck"},"type":"module","workspaces":["apps/*","packages/*"]}
